@@ -1,0 +1,52 @@
+getwd()
+install.packages("sidrar")
+library(sidrar)
+
+################# Pesquisar os códigos de cada tabela do Sidra ####################
+################# Tabela 1419: IPCA - Variação mensal #############################
+
+info_sidra("1419")
+
+
+################# Pesquisar que tabela tem o nome (sem acento) ####################
+
+search_sidra("industria")
+
+################# Inflação em Brasília nos últimos 12 meses ########
+
+get_sidra(x = 1419,variable = 63, period = c("last" = 12),geo = "City", geo.filter = 5300108, classific = "c315", category = list(7169), header = FALSE, format = 3)
+
+################# Inflação na RMR de Recife nos últimos 24 meses
+
+get_sidra(x=1419, variable=63,period= c("last"=24), geo = "MetroRegion", geo.filter = 2601, classific = "c315", category = list(7169), header = FALSE, format = 3)
+
+################# Gini por estados ##################################
+
+get_sidra(x = 5939, variable = 529, period = "2016", geo = "State",header = TRUE, format = 1)
+
+################# Censo e API #######################################
+##### t: tabela; p: período; v: variável desejada; n: nível territorial; c: classificação; c: classificação;
+##### c2: sexo, por exemplo; f: formatação dos resultados; d: decimais; h: cabeçalho
+##### (http://api.sidra.ibge.gov.br/home/ajuda)
+##### 
+
+info_sidra("1378")
+
+get_sidra(api = "/t/1378/n1/1/v/all/p/all/c1/all/c2/0/c287/0/c455/all/d/v1000093%202")
+
+################## PIM-PF Pernambuco #################################################
+
+info_sidra("3653")
+
+################## Pelo sidraR #######################################################
+get_sidra(x = 3653, variable = 3139, period = c("last" = 36),geo = "State", geo.filter = 26, classific = "c544", category = list(129314), header = FALSE, format = 3)
+
+################## Pelo API ##########################################################
+
+get_sidra(api = "/t/3653/n3/26/v/3139/p/all/d/4") ##### deu certo
+
+
+get_sidra(api = "/t/3653/n3/26/v/3139/c544/129314/p/all/d/4") ###### deu certo!!!!!
+
+get_sidra(api = "/t/3653/n3/26/v/3139/c544/129314/p/200301-201908/d/4")  ##### deu certo!!!!
+
