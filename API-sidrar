@@ -1,7 +1,7 @@
 getwd()
 install.packages("sidrar")
 library(sidrar)
-
+library(ggplot2)
 ################# Pesquisar os códigos de cada tabela do Sidra ####################
 ################# Tabela 1419: IPCA - Variação mensal #############################
 
@@ -50,3 +50,35 @@ get_sidra(api = "/t/3653/n3/26/v/3139/c544/129314/p/all/d/4") ###### deu certo!!
 
 get_sidra(api = "/t/3653/n3/26/v/3139/c544/129314/p/200301-201908/d/4")  ##### deu certo!!!!
 
+
+######## Gráfico no ggplot #####################################
+
+pimpfpe<- get_sidra(api = "/t/3653/n3/26/v/3139/c544/129314/p/200301-201908/d/4")
+
+pimpfpe
+class(pimpfpe)
+
+pimpfpe1<- pimpfpe$Valor
+pimpfpe1
+
+times = seq(as.Date('2003-01-01'), as.Date('2019-08-01'), by='month')
+times
+pimpfpe2 = data.frame(tempo = times, pimpfPE = pimpfpe1)
+pimpfpe2
+plot(pimpfpe2)
+
+
+ggplot(pimpfpe2, aes(x=times, y=pimpfPE))+
+geom_line()
+
+#### Site: http://ggplot.yhathq.com/docs/geom_line.html
+
+ggplot(pimpfpe2, aes(x=tempo, y=pimpfPE))+
+geom_line(color='blue', size=1, alpha=0.4)
+
+ggplot(pimpfpe2, aes(x=tempo, y=pimpfPE))+
+geom_line(color='blue', size=1)
+
+
+ggplot(pimpfpe2, aes(x=tempo, y=pimpfPE, color='red'))+
+    geom_line(alpha=1)
